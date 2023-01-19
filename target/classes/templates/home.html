@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -35,10 +35,12 @@
                 <td th:text="${user.email}"/>
 
                 <td>
-                    <a th:href="@{|/users/${user.id}/update|}">Edit</a>
+                    <a th:href="@{|/users/${user.id}/update|}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Edit</a>
+                    <span th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">Edit</span>
                 </td>
                 <td>
-                    <a th:href="@{|/users/${user.id}/delete|}">Remove</a>
+                    <a th:href="@{|/users/${user.id}/delete|}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Remove</a>
+                    <span th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">Remove</span>
                 </td>
             </tr>
         </table>
